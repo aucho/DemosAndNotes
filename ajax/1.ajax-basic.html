@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h2>aucho</h2>
+  <script>
+     var xhr = new XMLHttpRequest()
+     console.log( 'new:' + xhr.readyState)
+
+     xhr.open('GET', 'http://localhost:10086/a',true)
+     console.log( 'open:' + xhr.readyState)
+
+     xhr.send()
+    console.log( 'send:' + xhr.readyState)
+
+     xhr.addEventListener('readystatechange',function(){
+      if (this.readyState !== 4) return
+       console.log( 'receive:' + this.readyState)
+     })
+    /**
+     * readystate 
+     * 0 初始化 请求代理对象
+     * 1 open（）方法已经调用，建立与服务端端口的连接
+     * 2 已经接收到了响应报文的响应头
+     * 3 正在下载响应报文的响应体，可能响应体为空或不完整
+     * 4 响应报文已经下载完整
+     **/
+  </script>
+</body>
+</html>

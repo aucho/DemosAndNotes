@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        table{ margin: 10px auto}
+        tbody{
+            width: 100%;
+            background: #dde;
+        }
+        tbody:nth-child(even){
+            background-color: #eee;
+        }
+        td,th{
+            width: 24%;
+            text-align: center;
+        }
+        input{
+            height: 24px;
+            border: none;
+            border-bottom: 1px solid #333;
+            padding-left: 11px;
+            margin: 10px;
+        }
+        .add{
+            margin-left: 20px;
+            padding: 5px 20px;
+            box-shadow: 0 0 5px 0 #000;
+            background-color: #66b;
+            color:white;
+        }
+</style>
+</head>
+
+<body>
+    <div id="app">
+        <label for="inputName">添加名称</label>
+        <input type="text" id="inputName" v-model = "name" placeholder="Banana See">
+        <label for="inputName" @click = "addItem" class="add">添加</label>
+        <br>
+        <label for="inputFilter">名称筛选</label>
+        <input type="text" id="inputFilter" v-model = "keyword">
+        <table width="100%">
+            <tr>
+                <th>id</th>
+                <th>名称</th>
+                <th>时间</th>
+                <th>删除</th>
+            </th>
+            <tbody v-for="(item,index) in filteredList()">
+                <tr>
+                    <td>{{index}} </td>
+                    <td>{{item.itemName}}</td>
+                    <td>{{item.addTime | timeFormat}} </td>
+                    <td><a href="" @click.prevent = "removeItem(index)">delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+
+    //自定义Keycode
+    Vue.config.keyCodes.f1 = 112;
+
+    //全局过滤器 时间处理
+    Vue.filter('timeFormat',function(dt){
+        dt = new Date(dt);
+        var year = dt.getFullYear().toString().padStart(2,'0');
+        var month = (dt.getMonth()+1).toString().padStart(2,'0');
+        var date = dt.getDate().toString().padStart(2,'0');
+
+        var hour= dt.getHours().toString().padStart(2,'0');
+        var minutes = dt.getMinutes().toString().padStart(2,'0');
+        var seconds = dt.getSeconds().toString().padStart(2,'0');
+
+        return `${year}-${month}-${date} ${hour}:${minutes}:${seconds}`;
+    })
+
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            itemList:[
+                {
+                    itemName:'Apple Watch',
+                    addTime: new Date()
+                }
+            ],
+            name : '',
+            keyword:''
+
+        },
+        methods:{
+            addItem(){
+                that = this;
+                this.itemList.push({itemName: that.name, addTime: new Date()})
+            },
+            removeItem(index){
+                this.itemList.splice(index,1)
+            },
+            filteredList(){
+                var showList = [];
+                this.itemList.forEach(item => {
+                    if(item.itemName.indexOf(this.keyword) !== -1)
+                        showList.push(item);
+                });
+                return showList
+            } 
+        },
+    })
+
+</script>

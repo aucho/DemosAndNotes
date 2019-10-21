@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="switch" @click="switch_=!switch_">
+        <head-one v-if="switch_"></head-one>
+        <head-two v-else></head-two>
+    </div>
+
+    <template id="tpl">
+        <div>
+            <h1>this is global component 1</h1>
+        </div>
+    </template>
+</body>
+
+
+
+<script>
+    Vue.component('headOne',{
+        template: '#tpl',
+        data: function(){
+            return{
+            }
+        }
+    })
+
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            switch_:true,
+        },
+        components:{
+            headTwo:{
+                template:'<h2>this is private component 2</h2>'
+            }
+        }
+    })
+</script>

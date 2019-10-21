@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+    <div id="app">{{name}}</div>
+<script type="text/javascript">
+// https://www.cnblogs.com/beevesnoodles/p/9844854.html
+// 1.
+  // var people = {
+  //   name:'aucho',
+  //   age:'18'
+  // }
+  // people.age
+  // people.age = 100
+// 2.
+  // var me = {}
+
+  // Object.defineProperty(me, 'age',{
+  //   get: function(){
+  //     console.log('get age')
+  //     return age
+  //   },
+  //   set: function(newVal){
+  //     console.log('set age')
+  //     age = newVal
+  //   }
+  // })
+
+  // 此时访问age属性 会自动执行set函数里的东西
+
+  // me.age = 18;
+  // console.log(me.age)
+
+/**
+  * Observer 监听器：用来监听属性的变化通知订阅者
+  * Watcher 订阅者：收到属性的变化，然后更新视图
+  * Compile 解析器：解析指令，初始化模版，绑定订阅者
+  */
+
+// // 3.
+//   // 通过递归调用 可以遍历对象里的所有属性
+//   function traversal(data){
+//     console.log(data)
+//     if (!data || typeof(data)!=='object')
+//       return 
+//     for(item in data){
+//       traversal(data[item])
+//     }
+//   }
+
+//   let obj1 ={
+//     a:{
+//       aa:1,
+//       ab:{abccb:2}
+//     },
+//     b:3,
+//     c:{cc:4}
+//   }
+//   traversal(obj1)
+// 4.
+  // 使用单一函数递归 无法同时获取对象和他的子属性 因此用两个函数相互递归调用
+    // 对对象里的所有属性进行监听
+    let dep = new Dep
+    function traversal(data){
+      if (!data || typeof(data)!=='object')
+        return
+      // 这么写跟上面for item in data差不多
+      Object.keys(data).forEach(
+        key=>{
+          observer(data,key,data[key])
+        }
+      )
+    }
+
+    function observer(data,key,value){
+      traversal(value)
+      Object.defineProperty(data,key,{
+        get: function(){
+        if (Dep.target)
+          dep.addSub(Dep.target)
+        return value
+        },
+        set: function(newVal){
+          if (newVal === data)
+            return
+          value = newVal
+          dep.notify(newVal); // 通知订阅器
+        }
+      })
+    }
+  // Dep是一个管理容器
+    function Dep() {
+      this.subs = []
+    }
+    Dep.prototype.addSub = function(sub){this.subs.push(sub)}
+    Dep.prototype.notify = function(newVal){
+      console.log('通知 watcher 更新视图')
+      for (sub of this.subs){
+        sub.update()
+      }
+      document.getElementById('app').innerText = newVal
+    }
+    Dep.target = null
+    
+    // let obj2 ={a:{aa:1,ab:{aba:2}},b:3,c:{cc:4}}
+    // traversal(obj2)
+    // obj2.b = 100
+    let obj3 = {
+      a: document.getElementById('app').innerText
+    }
+    traversal(obj3)
+// 5.
+  // 订阅者 watcher 
+  // 把watcher添加到Dep容器里去
+  function Watcher(vm,prop,callback){
+    this.vm = vm,
+    this.prop = prop
+    this.callback = callback
+    this.value = this.get()
+  }
+  Watcher.prototype = {
+    update: function(){
+      const oldVal = this.value
+      if (this.value !== oldVal){
+        this.value = this.vm.$data[this.prop]
+        this.callback(this.vm.$data[this.prop])
+      }
+    },
+    get: function(){
+      Dep.target = this
+      const value = this.vm.$data[this.prop]
+      Dep.target = null
+      return value 
+    }
+  }
+
+
+  function Mvue(options, prop) {
+    this.$options = options;
+    this.$data = options.data;
+    this.$prop = prop;
+    this.$el = document.getElementById(options.el)
+    this.init();
+}
+  Mvue.prototype.init = function () {
+      traversal(this.$data);
+      this.$el.textContent = this.$data[this.$prop];
+      new Watcher(this, this.$prop, value => {
+          this.$el.textContent = value;
+      });
+  }
+  
+  const vm = new Mvue({
+    el: "app",
+    data: {
+        name: "name"
+    }
+}, "name");
+
+
+</script>
+</body>
+</html>

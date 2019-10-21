@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p >{{msgI}}</p>
+    </div>
+</body>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            msg : 'it\'s great to see you ',
+            msgI: '',
+            flashI:'|'
+        },
+        
+        mounted(){
+            var that = this;
+            console.log(that.msg.length)
+            let i = 0;
+            var n = function(){
+                that.msgI=that.msg.substring(0,i)+'|';
+                if(i > that.msg.length)
+                    clearInterval(timer);
+                i++;
+            }
+            var nn = function(){
+                if(i >= that.msg.length){
+                    that.flashI = (i%2 ?'|':'' );
+                    that.msgI = that.msg + that.flashI;
+                    i++;
+                }
+            }
+            var timer  = setInterval(n , 80);
+            var timer2 = setInterval(nn,500);
+        }
+        
+    })
+</script>

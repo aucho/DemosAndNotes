@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>sketchpad</title>
+</head>
+<style>
+  body{
+    margin: 0;
+    background-color: #ddd;
+  }
+  #canvas{
+    /* margin: 90px; */
+    background-color: #fff;
+    /* border: 18px solid #444; */
+    box-shadow: 0 0 12px 0;
+    border-radius: 25px
+  }
+
+</style>
+<body>
+  <canvas id="canvas" width="800px" height="600px"></canvas>
+
+  <script>
+    var canvas = document.getElementById('canvas')
+    var ctx = canvas.getContext('2d')
+
+    var style = canvas.style
+    style.border = '18px solid #444'
+    style.margin = '50px'
+
+    var pen = {
+      radius: 2,
+      rgb: 'rgb(0,0,0,1)',
+      x: 0,
+      y: 0,
+      isMouseDown: false,
+      draw: function (){
+        ctx.fillStyle = this.rgb
+        ctx.beginPath()
+        // ctx.moveTo(this.x+1,this.y+1)
+        // ctx.lineTo(this.x, this.y)
+        ctx.arc(this.x,this.y,this.radius,0,2*Math.PI,true)
+        ctx.fill()
+        // ctx.stroke()
+        ctx.closePath()
+        
+      }
+    }
+
+    // 判断鼠标是否按下 
+    canvas.addEventListener('mousedown', ()=>{
+      pen.isMouseDown = true
+    })
+    canvas.addEventListener('mouseup', ()=>{
+      pen.isMouseDown = false
+    })
+    
+    // 按下鼠标时 画图
+    canvas.addEventListener('mousemove', event=>{
+      if (!pen.isMouseDown) return
+      pen.x = event.offsetX 
+      pen.y = event.offsetY 
+      console.log(pen.x)
+      pen.draw()
+    })
+
+
+  </script>
+</body>
+</html>

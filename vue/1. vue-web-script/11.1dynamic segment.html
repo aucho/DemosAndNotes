@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+</head>
+
+<style>
+    .myactive {
+        background: #eee;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <router-link to="/user">user</router-link>
+        <hr>
+        <router-link to="/user/home/123">home</router-link>
+        <router-link to="/user/setting?name=10">setting</router-link>
+        <router-view></router-view>
+    </div>
+</body>
+
+<template id="user">
+    <div style="border: 1px solid black">
+        <h3>usera</h3>
+        <router-view></router-view>
+    </div>
+</template>
+
+<style>
+
+</style>
+<script>
+    const userHome = {
+        template: '<h1 style="border: 1px solid black">userHome id:{{$route.params.id || \'\'}}</h1>',
+        // created() {
+        //     console.log(this.$route)
+        // },
+    }
+    const userSetting = {
+        template: '<h1 style="border: 1px solid black">userSetting name:{{$route.query.name}} </h1>',
+    }
+    const user = {
+        template: '#user'
+    }
+
+    const routerObj = new VueRouter({
+        routes: [{
+                path: '/',
+                redirect: '/user'
+            }, //根节点重定向到/user
+            {
+                path: '/user',
+                component: user,
+                //children中添加嵌套路由 /开头的为根节点
+                // 带:的为动态路径，类似通过路径名字传一个参数的样子
+                children: [{
+                        path: 'home/:id',
+                        component: userHome
+                    },
+                    {
+                        path: 'setting',
+                        component: userSetting
+                    }
+                ]
+            }
+        ],
+        //可重新设置链接生效后的class名称 
+        linkActiveClass: 'myactive'
+    })
+    var vm = new Vue({
+        el: '#app',
+        data: {},
+        watch: {
+            '$route.path': function(newVal, oldVal){
+                // console.log(newVal + oldVal)
+                if(newVal === '/user')
+                    alert('hello user')
+            }
+        },
+        router: routerObj
+    }).$mount('#app')
+</script>

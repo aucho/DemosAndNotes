@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>jq</title>
+</head>
+<body>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script>
+    $(function(){
+      $.ajax({
+        url: 'http://localhost:10086/get',
+        type: 'get',
+        data: { name:'jack' },
+        // 只有状态码为200的时候才会执行
+        success: function(res){
+          // res拿到的是响应体
+          console.log(res)
+        },
+        // 状态码不为200执行
+        error: function(xhr){
+          console.log(xhr)
+        },
+        // 始终会执行
+        complete:function(xhr){
+          console.log(xhr)
+        }
+      })
+      $.get('http://localhost:10086/get',{ name: 'aucho' }, function(res){
+        console.log(res)
+      })
+      $.post('http://localhost:10086/post',{ name: 'aucho' }, function(res){
+        console.log(res)
+      })
+    })
+  </script>
+</body>
+</html>

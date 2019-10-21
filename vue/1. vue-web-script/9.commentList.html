@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+     integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+    <div id="app">
+        <add-comments @fun = "addData"></add-comments>
+        <ul class="list-group" >
+            <li v-for="com in comments" class="list-group-item">
+               <span class="badge">{{com.user}}</span> 
+               <span class="badge">{{com.time}}</span> 
+                {{com.content}}
+            </li>
+        </ul>
+    </div>
+
+    <!-- 子组件template区 -->
+    <template id="addCom">
+        <div class="form-group">
+            <input type="text" class="form-control" value="your name is" v-model="user"
+            placeholder="whats your name">
+            <h4>评论区子组件</h4>
+            <textarea name="" id=""  v-model="content" class="form-control"
+            placeholder="bootstrap.css used in this page to save time and code space"></textarea>
+            <br>
+            <input type="button" value="发表评论" class="btn btn-primary" @click="emitComment">
+            <input type="button" value="清空缓存" class="btn btn-primary" @click="initLocalStorage">
+            <hr>
+        </div>
+    </template>
+</body>
+
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            comments: [{user:'', content : '', time: new Date()},],
+        },
+        methods:{
+            addData(objCom = '{}'){
+                // //通过子组件直接传递的objCom更新评论区
+                // this.comments.push(objCom)
+
+                //通过获取localStorage中的值更新评论区
+                this.comments = JSON.parse(localStorage.getItem('commentData')||'[]')
+            }
+        },
+        created(){
+            //初始化localstorage
+            //localStorage.setItem('commentData',JSON.stringify(this.comments)) 
+            
+            this.addData()
+        },
+        components:{
+            addComments:{
+                template: '#addCom',
+                data: function(){
+                    return{
+                        content :'Try to flash this web page after add a comment',
+                        user :'aucho'
+                    }
+                },
+
+                methods: {
+                    emitComment(){
+                        let com = {user: this.user, content:this.content,time: new Date()};
+                        // this.$emit('fun', com) //直接传值给父组件
+
+                        //将子组件获取的值存到浏览器localStorage里
+                        let list = JSON.parse(localStorage.getItem('commentData')||'[]');// ||【】防止localStorage 里commentData 为空的时候报错 
+                        list.push(com);
+                        localStorage.setItem('commentData',JSON.stringify(list));
+                        this.user = this.content = ''
+                        this.$emit('fun');
+                    },
+                    initLocalStorage(){
+                        localStorage.setItem('commentData','[]')
+                        this.$emit('fun')
+                    }
+                }
+            }
+        }
+    })
+</script>

@@ -1,0 +1,17 @@
+
+that needs install
+//���
+style-loader css-loader//���css
+
+less-loader sass-loader
+
+file-loader url-loader  //���ͼƬ
+
+uglifyjs-webpack-plugin//ѹ��js
+
+html-webpack-plugin	//�ڴ�������html��ҳ�� ���html �Զ�����js
+
+extract-text-webpack-plugin//css����
+
+purifycss-webpack //����δʹ��css
+purify-css //��һ����������

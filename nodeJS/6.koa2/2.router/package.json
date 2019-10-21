@@ -1,0 +1,15 @@
+{
+  "name": "6.koa2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "koa": "^2.8.2",
+    "koa-bodyparser": "^4.2.1"
+  },
+  "author": "",
+  "license": "ISC"
+}

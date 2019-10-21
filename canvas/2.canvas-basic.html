@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas-basic</title>
+</head>
+<style>
+  *{
+    margin: 0%;
+    padding: 0%;
+  }
+  canvas{
+    position: absolute; 
+    /* width: 200px;
+    height:200px;  
+    never use css to set height or width of canvas*/
+    background-color: #696 ;
+  } 
+  canvas{
+    border:1px solid #999
+  }
+</style>
+
+<body>
+  <canvas id="canvas" >请升级您的浏览器</canvas>
+</body>
+
+<script>
+  var canvas = document.getElementById('canvas')
+  var ctx = canvas.getContext('2d')
+  
+  ctx.fillStyle = "rgb(100, 200, 100, 0.6)"
+  ctx.fillRect(0,0,299,149)
+  
+  
+</script>
+</html>

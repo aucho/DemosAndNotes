@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>封装</title>
+</head>
+<body>
+  <script>
+
+    function ajax(method, url, param = null, callback){
+      // 大写post 和 get
+      method = method.toUpperCase()
+      var xhr = new XMLHttpRequest()
+
+      if (method === 'GET')
+      {
+        url += '?' + param
+        xhr.open(method, url, true)
+        xhr.send()
+
+      }
+      if (method === 'POST')
+      {
+        xhr.open(method, url, true)
+        if (param instanceof Object){
+          let urlEncode = ''
+          for (key in param){
+            urlEncode += `${key}=${value}&`
+          }
+          param = urlEncode
+        }
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+        xhr.send(param)
+      }
+      // 接收消息执行回调函数
+      xhr.addEventListener('readystatechange', ()=>{
+        if (xhr.readyState !== 4) return
+         callback(xhr.responseText)
+      } )
+    }
+
+    ajax('get', 'http://localhost:10086/get', 'info=get_req_send', (res)=>{
+      console.log(res)
+    })
+    
+    ajax('post', 'http://localhost:10086/post', 'info=post_req_send', (res)=>{
+      console.log(res)
+    })
+
+
+  </script>
+</body>
+</html>

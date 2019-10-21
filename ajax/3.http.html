@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>遵循http</title>
+</head>
+<body>
+  <!-- <form action="/a" method="post">
+    <input type="text"/>
+    <button type="submit">aucho</button>
+  </form> -->
+
+  <script>
+
+    var xhr = new XMLHttpRequest()
+
+    xhr.open('POST','http://localhost:10086/a')
+    
+    // form表单请求头content-type
+    // xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+
+    xhr.send('key=value&key2=value2')
+  </script>
+</body>
+</html>

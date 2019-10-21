@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="./lib/animate.css"></link>
+</head>
+<style>
+    label{ box-shadow: 0 0 3px}
+    /*type1*/
+    .my-enter,
+    .my-leave-to{
+        opacity: 0;
+        color:#911;
+        transform: translateY(60px);
+    }
+    .my-enter-to,
+    .my-leave{
+        opacity: 255;
+    }
+    .my-leave-active,
+    .my-enter-active{
+        transition: all 0.5s ease;
+        position: absolute;
+    }
+    .my-move{
+        transition: all 0.5s ease;
+    }
+</style>
+<body>
+    <div id="app">
+        <!-- use css -->
+        <label @click="show=!show">click-here  show: {{show}} </label>
+        <transition name="my" >
+            <h1 v-show="show" >type1---using name and transition</h1>
+        </transition>
+        <hr>
+
+        <!-- import a css lib -->
+        <label @click="show2=!show2">click-here  show2: {{show2}} </label>
+        <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut" :duration="1000">
+            <h1 v-show="show2" >Animate.css - bounceIn and bounceOut</h1>
+        </transition>
+        <hr>
+
+
+        <!-- js animate lifecycle hook -->
+        <label @click="show3=!show3">click-here  show3: {{show3}} </label>
+        <transition
+            @before-enter="beforeEnter"
+            @enter="enter"
+            @after-enter="afterEnter"
+            @enter-cancelled=""
+        > 
+            <!-- @before-leave="beforeEnter"
+                @leave="enter"
+                @after-leave="afterEnter"
+                @leave-cancelled="" -->
+            <h1 v-show="show3">Animate LifeCycle Hook</h1>
+        </transition>
+
+
+        <!-- transition-group -->
+        <hr>
+        <input type="text " v-model="name">
+        <button @click="addItem" >addItem</button>
+            <transition-group tag="ul" name="my" appear>
+                <!-- 每一项必须有key -->
+            <li  v-for="(item, index) in items"  :key = "item.id" >arrayID: {{index}}--realID: {{item.id}}-----NAME: {{item.name}}|||
+                <a href="" @click.prevent="remove(index)">remove</a>
+            </li>
+            </transition-group>
+    </div>
+</body>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            show: false,
+            show2: false,
+            show3: false,
+            items:[{id : 0, name:'jack'}],
+            name:'',
+            Id:0
+        },
+        methods:{
+            //el表示执行动画元素对象
+            //起始样式
+            beforeEnter(el){
+                el.style.transform = "translate(100px,100px)"
+            },
+            enter(el, done){
+                el.offsetWidth                //必须 动画刷新 ？
+                el.style.transform = "translate(0px,0px)"
+                el.style.transition = "all 1s ease"
+                done()                    //调用afterEnter
+            },
+            //结束执行
+            afterEnter(el){
+                console.log('afterEnter')
+                this.show3 = !this.show3;
+            },
+
+            addItem(){
+                this.Id++;
+                this.items.push({id:this.Id, name:this.name})
+            },
+            remove(index){
+                this.items.splice(index,1)
+            }
+        }
+    })
+</script>

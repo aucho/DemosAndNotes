@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h3 ref="ref1" @click="reference">click me to see my innterText</h3>
+        <h3  @click="reference2">click me to invoke childcomponent's method</h3>
+        <login ref="ref2"></login>
+    </div>
+</body>
+<script>
+    var login = {
+        template :'<h3>child component</h3>',
+        methods : {
+            show(){
+                alert('it is login comp\'s show() method')
+            }
+        }
+    }
+
+    var vm = new Vue({
+        el:'#app',
+        data:{
+        },
+        methods:{
+            reference(){
+                alert(this.$refs.ref1.innerText);
+            },
+            reference2(){
+                this.$refs.ref2.show();
+            }
+        },
+        components:{
+            login
+        }
+    })
+</script>

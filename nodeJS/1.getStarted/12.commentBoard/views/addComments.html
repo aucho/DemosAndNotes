@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<header>
+  <title>add comments</title>
+  <meta charset="utf-8">
+</header>
+
+<style>
+  .c{ width: 80vw;  border-radius: 1rem;  font-size: 2rem; margin:5px }
+  input{ height: 10vh; }
+  textarea{ height: 60vh; } 
+  button{ background-color: #696;  color: #fff;  height:8vh;  border:none; }
+</style>
+
+<body style="margin: 10vh 10vw">
+  <form action="/postComments" method="get">
+    <input class="c" type="text" name = "title"/>
+    <textarea class="c" name = mainText> </textarea>
+    <button class="c" onclick="submit" > 发表  </button>
+  </form>
+</body>

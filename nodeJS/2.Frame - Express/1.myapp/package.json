@@ -1,0 +1,12 @@
+{
+  "name": "1_myapp",
+  "version": "0.0.1",
+  "description": "my first project",
+  "main": "app.js",
+  "scripts": {},
+  "author": "aucho",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

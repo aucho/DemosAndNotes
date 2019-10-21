@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>animation</title>
+</head>
+<body>
+  <canvas id="canvas" width="600px" height="600px" style="background-color: lightblue"></canvas>
+</body>
+<script>
+  var canvas = document.getElementById('canvas')
+  var ctx = canvas.getContext('2d')
+  var raf;
+
+  //创建小球
+  var ball = {
+    x : 300,
+    y : 10,
+    vx : 40,
+    vy : 6,
+    radius: 10,
+    color: '#eee',
+    draw(){
+      ctx.beginPath()
+      ctx.arc(this.x,this.y,this.radius,0,2*Math.PI,true)
+      ctx.closePath()
+      ctx.fillStyle = this.color
+      ctx.fill()
+    }
+  }
+  // 每帧更新小球位置
+  function move(){
+  // 用半透明同色背景覆盖上一帧 制造拖尾效果
+    ctx.fillStyle = 'rgb(96,96,144,0.3)'
+    ctx.fillRect(0,0,600,600)
+    //ctx.clearRect(0,0,600,600)
+    ball.x += ball.vx
+    ball.y += ball.vy
+    // 墙壁反弹
+    if (ball.x >= canvas.width || ball.x <= 0){
+      ball.vx = -ball.vx      
+    }
+
+    if (ball.y >= canvas.height || ball.y <= 0){
+      ball.vy = -ball.vy     
+    }
+    ball.draw()
+    raf = window.requestAnimationFrame(move)
+  }
+
+    window.requestAnimationFrame(move)
+</script>
+</html>

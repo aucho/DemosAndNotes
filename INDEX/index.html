@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./reset.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./section.css">
+</head>
+<body>
+  <div class="cover"></div>
+  <header class="header">
+    <div class="header-container">
+      <span class="website-name">AUCHO</span>
+      <div class="menu-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="catalog">
+        <ul>
+          <li class="list-item-home active">Home</li>
+          <li class="list-item-archives">Archives</li>
+          <li class="list-item-about">About</li>
+        </ul>
+        <div class="text-bottom-line"></div>
+      </div>
+    </div>
+  </header>
+  <section id="section1" class="section1 fullscreen">
+    <div class="title">
+      <h2 class='my-page'>AUCHO's Page</h2>
+      <p class="p1"></p>
+    </div>
+    <div class="to-next-page" onclick="scrollto('#section2')">
+      <div class="arrow"></div>
+    </div>
+  </section>
+  <section id="section2" class="fullscreen">
+    <div class="list-container">
+        <ul class="archive-list">
+          <li class="li-item">
+            <p class="li-name">ProjA</p>
+            <div class="description">俄罗斯方块</div>
+          </li>
+          <li class="li-item">
+            <p class="li-name">ProjB</p>
+            <div class="description">俄罗斯方块</div>
+          </li>
+          <li class="li-item">
+            <p class="li-name">ProjC</p>
+            <div class="description">俄罗斯方块</div>
+          </li>
+          <li class="li-item">
+            <p class="li-name">ProjD</p>
+            <div class="description">俄罗斯方块</div>
+          </li>
+          <li class="li-item">
+            <div class="description">俄罗斯方块</div>
+            <p class="li-name">ProjE</p>
+          </li>
+          
+        </ul>
+    </div>
+  </section>
+  <section id="section3" class="fullscreen">
+    <div class=""></div>
+  </section>
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="./PageScroll.js"></script>
+<script src="./section.js"></script>
+</html>

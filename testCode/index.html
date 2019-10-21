@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<style>
+.test1{
+  font-size: 12px;
+  transition: 1s ease;
+  /* background-color: #123; */
+}
+.test1:hover{
+  font-size: 60px;
+}
+.test2{
+  font-size: 120px;
+}
+</style>
+<body>
+  <div>
+    <div id="123" class="test1">clickme</div>
+  </div>
+</body>
+<script>
+  document.getElementById('123').addEventListener('click',function(){
+    alert('123')
+    this.classList.add('test2')
+  })
+  
+</script>
+</html>

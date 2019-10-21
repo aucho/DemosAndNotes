@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>animation</title>
+</head>
+<body>
+  <canvas id="canvas" width="600px" height="600px" style="background-color: #669"></canvas>
+  <div>点击canvas内部生成小球 速度随机</div>
+</body>
+<script>
+  var canvas = document.getElementById('canvas')
+  var ctx = canvas.getContext('2d')
+
+  //创建小球
+  function Ball(){
+    this.x = 10,
+    this.y = 10,
+    this.vx = Math.random()-0.5,
+    this.vy = Math.random()-0.5,
+    this.radius= 10,
+    this.move = false,
+    this.color= '#000'
+    this.raf = 0;
+  }
+  Ball.prototype = {
+    draw : function(){
+        ctx.beginPath()
+        ctx.arc(this.x,this.y,this.radius,0,2*Math.PI,true)
+        ctx.closePath()
+        ctx.fillStyle = this.color
+        ctx.fill()
+    }
+  }
+
+  // 每帧更新小球位置 这里传入的ball是一个ball对象
+  function move(ball){
+    ctx.fillStyle = 'rgb(96,96,144,0.1)'
+    ctx.fillRect(0,0,600,600)
+    ball.draw()
+    ball.x += ball.vx*10
+    ball.y += ball.vy*10
+    // 墙壁反弹
+    if (ball.x >= canvas.width || ball.x <= 0){
+      ball.vx = -ball.vx      
+    }
+
+    if (ball.y >= canvas.height || ball.y <= 0){
+      ball.vy = -ball.vy     
+    }
+    ball.raf = window.requestAnimationFrame(()=>{
+      move(ball)
+    })
+  }
+
+  //点击释放小球
+  canvas.addEventListener('click', (e)=>{
+    var ballball = new Ball()
+    ballball.x = e.clientX
+    ballball.y = e.clientY
+    window.requestAnimationFrame(function(){
+      move(ballball)
+    })
+  })
+
+</script>
+</html>

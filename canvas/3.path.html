@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <canvas id="canvas" width="300px" height="300px" style="border: 1px solid #666">
+
+  </canvas>
+
+  <script>
+    var canvas = document.getElementById('canvas')
+    var ctx = canvas.getContext('2d')
+
+    ctx.beginPath()     
+    // ctx.moveTo(200,0)   // 移动点
+    // ctx.lineTo(200,200) // 从原来点位置画线至目标点
+    // ctx.lineTo(100, 100)
+    // ctx.fillStyle = "rgb(0, 0, 200, 0.5)"
+    // ctx.fill()          // 填充画线区域 自动连接头尾进行闭合
+    // // ctx.endPath()
+
+
+    // // 画圆弧
+
+    // // 把角度转化为弧度
+    // function toArc(angle){
+    //   return angle%360/360 * 2 * Math.PI
+    // }
+    // var 
+    //   x = 100,
+    //   y = 100,
+    //   radius = 50
+    //   startAngle =  toArc(0)
+    //   endAngle = toArc(128)
+    //   anticlockwise = false
+    // ctx.beginPath()
+    // ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise)
+    // // 弧度0 为 x 正轴方向 即 正右侧为0     
+    // // startAngle 和 end Angle的弧度以顺时针计
+    // ctx.fillStyle = "rgb(200, 0, 0, 0.5)"
+    // ctx.fill()
+    // // ctx.endPath()
+
+
+    // // 贝塞尔曲线 类似ps里的钢笔
+    // // 二次贝塞尔  一点确定弧度 两点确定头尾
+    // ctx.moveTo(150,100)/*起始点*/
+    // ctx.quadraticCurveTo(100,100,/*确定弧度的点*/   100,150/*结束点*/) //此时的 点 在 结束点（100，150）
+    // // ctx.moveTo(100,150)
+    // ctx.quadraticCurveTo(100,200,150,200)
+    // ctx.quadraticCurveTo(200,200,200,150)
+    // ctx.quadraticCurveTo(200,100,150,100)
+    // ctx.fill()
+
+    // 字体
+    function draw() {
+    var ctx = document.getElementById('canvas').getContext('2d');
+    ctx.font = "48px serif";
+    ctx.strokeText("Hello world", 10, 50);
+  }
+  draw()
+
+
+  </script>
+</body>
+</html>

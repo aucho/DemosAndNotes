@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        me
+    <user>jack</user>
+    </div>
+    
+</body>
+<script>
+    var user = {
+        template: '<h1>hello </h1>'
+    }
+
+    var vm = new Vue({
+        el:'#app',
+        data:{
+        },
+        methods: {
+            
+        },
+        // render(createElement) {  //creatElement是一个方法 调用之可以使 指定的组件模板 渲染为 html结构
+        //     return createElement(user)
+        //     //return 的结果会替换页面的el 指定的容器
+        // },
+        components:{
+            user
+        }
+    })
+</script>

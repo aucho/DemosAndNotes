@@ -1,0 +1,78 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>edit studen</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <style>
+      .container {
+        max-width: 960px;
+      }
+
+      .border-top { border-top: 1px solid #e5e5e5; }
+      .border-bottom { border-bottom: 1px solid #e5e5e5; }
+      .border-top-gray { border-top-color: #adb5bd; }
+
+      .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+
+      .lh-condensed { line-height: 1.25; }
+    </style>
+  </head>
+
+  <body class="bg-light">
+
+    <div class="container">
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h2>edit student #{{ id }}</h2>
+      </div>
+
+      <div class="row">
+        <!-- form标签在这里 -->
+          <form class="needs-validation" method="POST" action="/edit">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label>name</label>
+                <input type="text" class="form-control" name="name" id="firstName" required value="{{ name }}">
+              </div>
+
+                <div class="col-md-9 mb-3">
+                    <label>age</label>
+                    <input type="text" class="form-control" name = "age" id="firstName" required value="{{ age }}">
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>gender</label>
+                    <select type="" class="form-control" name = "gender" id="firstName" required value = "{{ gender }}">
+                      <option value="0" > 男</option>
+                      <option value="1">  女</option>
+                    </select>
+                </div>
+                
+                <div class="col-md-9 mb-3">
+                    <label>hobbies</label>
+                    <input type="text" class="form-control" name = 'hobbies' id="firstName" required value="{{ hobbies }}">
+                </div>
+                <input type="hidden" value="{{ id }}" name = "id">
+            </div>
+
+           
+            </div>
+            
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">提交修改</button>
+          </form>
+        </div>
+      </div>
+
+  </body>
+</html>

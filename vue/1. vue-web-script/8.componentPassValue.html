@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <child :message="msg" @fun = "displayChildmsg"></child>
+        <h4>{{childMsg}} </h4>
+    </div>
+
+    <template id="child">
+        <div>
+            <h3>get message form parent: {{message}}</h3>
+            <button  @click="clickChild">click to get childMsg, Iam a button in </button>
+        </div>
+    </template>
+</body>
+<script>
+    // 父组件通过子组件prop向子组件传值
+    // 子组件通过给 父组件向其传递的方法 传参数，来给父组件传值
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            msg:'IamFatherMessage',
+            childMsg:''
+        },
+
+        methods:{
+            displayChildmsg(data){
+                // console.log('I am your father');
+                // console.log(data)
+                this.childMsg = data;
+            }
+        },
+        components:{
+            child:{
+                // prop内数据只读
+                props:['message'],
+                data: function(){
+                    return{
+
+                    }
+                },
+                methods:{
+                    clickChild(){
+                        this.$emit('fun','IamChildMessage')
+                    }
+                },
+                template:'#child'
+            }
+        }
+    })
+</script>

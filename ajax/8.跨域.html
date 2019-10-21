@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script>
+    // jsonp方式
+    var script = document.createElement('script')
+    script.src = 'http://localhost:10086/js'
+    document.body.appendChild(script)
+
+    function divSrc(json){
+      console.log(json)
+    }
+    // cors
+    $.get('http://localhost:10086/cors',{info: "i am from 12580"},function(res){
+      console.log(res)
+    })
+
+  </script>
+</body>
+</html>

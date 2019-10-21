@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>父子组件通信</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+</head>
+<style>
+    html,body {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    } 
+  
+    .header {
+        background-color: #996;
+        height: 100px;
+    }
+   
+    .container {
+        display: flex;
+        height: 800px;
+    }
+
+    .leftBox {
+        background-color: #669;
+        flex: 3;
+    }
+
+    .mainBox {
+        background-color: #966;
+        flex: 7;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <router-view></router-view>
+        <div class="container">
+            <!-- 子组件props绑定父组件data里的值 -->
+            <router-view name="left" :content = "contentLeft"></router-view>
+            <!--子组件通过调用父组件的方法 通过添加参数的方式向父组件传值 有点像回调函数-->
+            <router-view name="main" @fun = "mBox"></router-view>
+        </div>
+    </div>
+
+
+
+</body>
+<script>
+    // 父子组件的通信
+    const header = {
+        template: '<div class="header">header</div>'
+    }
+
+    const mainBox = {
+        data(){
+            return{
+                mainContent:'mainContent, message from child'
+            }
+        },
+        template: '<div class="mainBox">mainBox</div>',
+        created(){
+            this.$emit('fun',this.mainContent)
+        }
+    }
+
+    const leftBox = {
+        props:['content'],
+        template: '<div class="leftBox">this is leftBox, I get {{content}} </div>'
+    }
+
+    const router = new VueRouter({
+        routes: [{
+            path: '/',
+            components: {
+                'default': header,
+                'left': leftBox,
+                'main': mainBox
+            }
+        }]
+    })
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            contentLeft:'message from parent',
+            contentMain:''
+        },
+        methods:{
+            mBox(content){
+                this.contentMain = content;
+                console.log(this.contentMain)
+            }
+        },
+
+        router: router
+    }).$mount('#app')
+</script>

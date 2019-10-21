@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<header>
+  <meta charset = "utf-8">
+  <!-- <script src="node_modules/art-template/lib/template-web.js"></script> -->
+</header>
+
+<body>
+  <h1>I am a html file</h1>
+  <p>Those what in mustaches will be replaced at server when template engine used</p>
+  <h3>my name is {{name}} </h3>
+  <h3>I am {{age}} years old </h3>
+  <h3>I love to</h3>
+  <ul>
+    {{each hobbies}}
+      <li>{{$value}} </li>
+    {{/each}}
+  </ul>
+  
+</body>
